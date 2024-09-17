@@ -9,8 +9,12 @@ export const useUserStore = defineStore('user', () => {
   const getUser = computed(() => user.value)
   const getChilds = computed(() => childs.value)
 
-  const getData = computed(() => {    
-    return { user: user.value, childs: childs.value }
+  const getData = computed(() => {   
+    if (!user.value.name) return null
+    return { 
+      user: user.value, 
+      childs: childs.value
+     }
   })
 
   function setUser(name: string, age: number) {
@@ -20,7 +24,7 @@ export const useUserStore = defineStore('user', () => {
 
   function setChilds(data: IChild[]) {
     if (!data.length) return
-    
+
     childs.value = [...data]    
   }
 
