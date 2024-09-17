@@ -1,19 +1,28 @@
 import { ref, computed } from 'vue'
+import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
-
-interface User {
-  name: string
-  age: number | null
-}
+import type { IUser, IChild } from '@/interfaces'
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref<User | null>(null)
+  const user: Ref<IUser> = ref({})
+  const childs: Ref<IChild[] | []> = ref([])
   const getUser = computed(() => user.value)
+  const getChilds = computed(() => childs.value)
+
+  const getData = computed(() => {    
+    return { user: user.value, childs: childs.value }
+  })
 
   function setUser(name: string, age: number) {
     user.value!.name = name
     user.value!.age = age
   }
 
-  return { user, setUser, getUser }
+  function setChilds(data: IChild[]) {
+    if (!data.length) return
+    
+    childs.value = [...data]    
+  }
+
+  return { getUser, getChilds, getData, setUser, setChilds }
 })

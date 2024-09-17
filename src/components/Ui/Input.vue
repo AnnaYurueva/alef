@@ -1,7 +1,8 @@
 <template>
     <div class="input">
         <label for="input">{{ label }}</label>
-        <input type="text" v-model="inputData" />
+        <span v-if="showError" class="input-error">{{ textError }}</span>
+        <input :type="type" v-model="inputData" />
     </div>
 </template>
 
@@ -10,7 +11,20 @@ defineProps({
     label: {
         type: String,
         required: true
-    }
+    },
+    type: {
+        type: String,
+        required: true,
+        default: 'text',
+    },
+    showError: {
+        type: Boolean,
+        default: false,
+    },
+    textError: {
+        type: String,
+        default: false,
+    },
 })
 const inputData = defineModel('inputData')
 </script>
@@ -19,6 +33,8 @@ const inputData = defineModel('inputData')
 @import '/src/assets/variables.scss';
 
 .input {
+    position: relative;
+    width: 100%;
     display: grid;
     padding: 7px 16px;
     border-radius: 4px;
@@ -30,12 +46,19 @@ const inputData = defineModel('inputData')
     }
 
     & input {
+        width: 100%;
         border: none;
 
         &:focus {
             outline: none;
 
         }
+    }
+    &-error{
+        position: absolute;
+        right: 16px;
+        top: 7px;
+        color: $error;
     }
 }
 </style>
