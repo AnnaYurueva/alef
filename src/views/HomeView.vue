@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import type { Ref } from 'vue';
 import Button from '@/components/Ui/Button.vue'
 import Input from '@/components/Ui/Input.vue'
 import IconPlus from '@/components/icons/IconPlus.vue';
 import ChildForm from '@/components/ChildForm.vue';
-import type { IChild } from '@/interfaces';
+import type { IChild } from '@/interfaces/data';
 import { useUserStore } from "@/stores/user";
 import { useRouter } from 'vue-router'
 
@@ -19,9 +20,9 @@ const form = ref({
   age: null
 })
 
-const childItem = ref({
+const childItem: Ref<IChild> = ref({
   nameChild: '',
-  ageChild: ''
+  ageChild: null
 })
 
 const childsData: Ref<IChild[]> = ref([])
@@ -44,9 +45,9 @@ function setChild(index: number, data: IChild) {
   childsData.value[index] = data
 }
 
-const errors = ref({});
+const errors: Ref<any> = ref({});
 const isNameValid = computed(() => form.value.name.trim() !== '');
-const validateField = (field) => {
+const validateField = (field: string) => {
   errors.value[field] = '';
   if (field === 'name' && !isNameValid.value) {
     errors.value.name = 'Name is required.';
@@ -58,13 +59,13 @@ function submitForm() {
   validateField('name');
 
   let errorsCount = 0
-  for (const error of Object.values(errors.value)) {
+  for (let error of Object.values(errors.value)) {
     if (error.length > 0) errorsCount++
   }  
 
   if (errorsCount === 0) {    
     store.setChilds(childsData.value)
-    store.setUser(form.value.name, form.value.age)
+    store.setUser(form.value)
     router.push('/preview')
   } else {
     console.log(errors.value);
@@ -92,7 +93,7 @@ function submitForm() {
       </Button>
     </div>
 
-    <ChildForm v-for="(child, index) of childsData" :ageChild="child.addChild" :nameChild="child.name" :key="index"
+    <ChildForm v-for="(child, index) of childsData" :ageChild="child.ageChild" :nameChild="child.nameChild" :key="index"
       @deleteChild="deleteChild(index)" @update="setChild(index, $event)" />
 
     <Button type="submit">Сохранить</Button>

@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 import type { IUser, IChild } from '@/interfaces/data'
 
 export const useUserStore = defineStore('user', () => {
-  const user: Ref<IUser> = ref({name: '', age: null})
+  const user: Ref<IUser> = ref({name: ''})
   const childs: Ref<IChild[] | []> = ref([])
   const getUser = computed(() => user.value)
   const getChilds = computed(() => childs.value)
@@ -17,9 +17,9 @@ export const useUserStore = defineStore('user', () => {
      }
   })
 
-  function setUser(name: string, age: number) {
-    user.value.name = name
-    user.value.age = age
+  function setUser(data: IUser) {
+    user.value.name = data.name
+    user.value.age = data.age ? data.age : null
   }
 
   function setChilds(data: IChild[]) {
