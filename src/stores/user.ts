@@ -1,10 +1,10 @@
 import { ref, computed } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { IUser, IChild } from '@/interfaces'
+import type { IUser, IChild } from '@/interfaces/data'
 
 export const useUserStore = defineStore('user', () => {
-  const user: Ref<IUser> = ref({})
+  const user: Ref<IUser> = ref({name: '', age: null})
   const childs: Ref<IChild[] | []> = ref([])
   const getUser = computed(() => user.value)
   const getChilds = computed(() => childs.value)
@@ -18,8 +18,8 @@ export const useUserStore = defineStore('user', () => {
   })
 
   function setUser(name: string, age: number) {
-    user.value!.name = name
-    user.value!.age = age
+    user.value.name = name
+    user.value.age = age
   }
 
   function setChilds(data: IChild[]) {

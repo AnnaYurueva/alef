@@ -9,6 +9,6 @@ export interface IChild {
 }
 
 export interface IData {
-    user: IUser
-    childs: IChild[] | []
+    user?: IUser
+    childs?: IChild[]
 }

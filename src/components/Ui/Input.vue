@@ -14,7 +14,6 @@ defineProps({
     },
     type: {
         type: String,
-        required: true,
         default: 'text',
     },
     showError: {
@@ -23,7 +22,6 @@ defineProps({
     },
     textError: {
         type: String,
-        default: false,
     },
 })
 const inputData = defineModel('inputData')

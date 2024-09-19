@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Button from '@/components/Ui/Button.vue'
 import Input from '@/components/Ui/Input.vue'
-import type { IChild } from '@/interfaces';
+import type { IChild } from '@/interfaces/data';
 import { ref, onMounted, watch } from 'vue';
 const emits = defineEmits(['deleteChild', 'update'])
 const props = defineProps<IChild>()
